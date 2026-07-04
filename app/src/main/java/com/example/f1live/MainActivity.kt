@@ -1,12 +1,15 @@
 package com.example.f1live
 
+import android.app.Activity
+import android.graphics.Color
 import android.os.Bundle
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View
+import android.view.WindowInsets
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
     
     private lateinit var webView: WebView
     
@@ -24,14 +27,8 @@ class MainActivity : AppCompatActivity() {
         webSettings.setSupportZoom(false)      // 禁止缩放
         webSettings.builtInZoomControls = false
         
-        // 强制横屏（已经在 Manifest 里设置，这里再次确保）
-        requestedOrientation = android.content.pm.ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        
-        // 保持屏幕常亮（投影仪重要）
-        window.addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        
-        // 隐藏状态栏和导航栏（全屏模式）
-        hideSystemUI()
+        // 全屏模式（隐藏状态栏和导航栏）
+        enableFullscreen()
         
         // 设置 WebViewClient（在同一个 WebView 中打开链接）
         webView.webViewClient = WebViewClient()
@@ -45,28 +42,47 @@ class MainActivity : AppCompatActivity() {
         webView.loadUrl("file:///android_asset/jrs_wlty_online.html")
     }
     
-    private fun hideSystemUI() {
-        // 全屏模式（隐藏状态栏和导航栏）
-        window.decorView.systemUiVisibility = (
-            android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-            or android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-            or android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
-            or android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-        )
+    @Suppress("DEPRECATION")
+    private fun enableFullscreen() {
+        // 状态栏和导航栏透明
+        window.statusBarColor = Color.TRANSPARENT
+        window.navigationBarColor = Color.TRANSPARENT
+        
+        // 使用新 API 实现全屏（Android 11+ / API 30+）
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            window.setDecorFitsSystemWindows(false)
+            window.insetsController?.let { controller ->
+                controller.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
+                controller.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            }
+        } else {
+            // 旧 API（Android 10 及以下）
+            @Suppress("DEPRECATION")
+            window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN
+            )
+        }
     }
     
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) {
-            hideSystemUI()
+            enableFullscreen()
         }
     }
     
     // 处理返回键（在 WebView 中返回上一页）
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (webView.canGoBack()) {
             webView.goBack()
         } else {
+            @Suppress("DEPRECATION")
             super.onBackPressed()
         }
     }
