@@ -38,9 +38,9 @@ android {
 // 自动复制 HTML 文件到 assets 目录
 val copyHtml = tasks.register<Copy>("copyHtml") {
     description = "Copy jrs_wlty_online.html to assets"
-    from(layout.projectDirectory.dir("../../.."))
+    from(layout.projectDirectory)
     include("jrs_wlty_online.html")
-    into(layout.projectDirectory.dir("src/main/assets"))
+    into(layout.projectDirectory.dir("app/src/main/assets"))
 }
 
 // 在 preBuild 之前执行
