@@ -36,11 +36,14 @@ android {
 }
 
 // 自动复制 HTML 文件到 assets 目录
+// 注意：此文件在 app/ 子项目里，rootProject 才是仓库根目录 (android-app/)
 val copyHtml = tasks.register<Copy>("copyHtml") {
-    description = "Copy jrs_wlty_online.html to assets"
-    from(layout.projectDirectory)
+    description = "Copy jrs_wlty_online.html from repo root to assets"
+    // HTML 文件在仓库根目录 (android-app/jrs_wlty_online.html)
+    from(rootProject.layout.projectDirectory)
     include("jrs_wlty_online.html")
-    into(layout.projectDirectory.dir("app/src/main/assets"))
+    // 复制到 app/src/main/assets/ (相对于 app/ 子项目目录)
+    into(layout.projectDirectory.dir("src/main/assets"))
 }
 
 // 在 preBuild 之前执行
