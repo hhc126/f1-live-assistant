@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- 权限：访问网络（观看直播需要） -->
     <uses-permission android:name="android.permission.INTERNET" />
-    
-    <!-- 权限：保持屏幕常亮（投影仪重要） -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
@@ -13,21 +10,21 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.DeviceDefault.NoActionBar.Fullscreen"
         android:hardwareAccelerated="true">
-        
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:screenOrientation="landscape"  <!-- 强制横屏 -->
+            android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:keepScreenOn="true">  <!-- 保持屏幕常亮 -->
-            
+            android:keepScreenOn="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            
+
         </activity>
-        
+
     </application>
 
 </manifest>
