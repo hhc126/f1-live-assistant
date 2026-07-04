@@ -1,0 +1,33 @@
+# Android
+*.apk
+*.ap_
+*.dex
+*.class
+*.log
+*.jar
+*.pyc
+*.pyo
+.DS_Store
+*.iml
+.gradle/
+local.properties
+*.swp
+out/
+
+# Android Studio
+.idea/
+build/
+captures/
+
+# Keystore files (⚠️ 不要上传密钥文件)
+*.jks
+*.keystore
+
+# Temporary files
+assets/jrs_wlty_online.html
+assets/f1_2026_schedule.json
+output/
+
+# OS
+.DS_Store
+Thumbs.db

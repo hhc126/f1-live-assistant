@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+    F1 直播助手 - 主界面布局
+    功能：全屏 WebView，加载本地 HTML
+-->
+<WebView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/webview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0d1117"  <!-- 深色背景，匹配 HTML 样式 -->
+/>
