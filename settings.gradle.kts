@@ -1,6 +1,3 @@
-// settings.gradle
-// 功能：配置项目名称
-
 pluginManagement {
     repositories {
         google()
@@ -18,4 +15,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "F1LiveAssistant"
-include ':app'
+include(":app")

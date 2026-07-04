@@ -25,8 +25,15 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Setup Gradle
+        run: |
+          chmod +x gradlew
+          wget -q https://services.gradle.org/distributions/gradle-8.5-bin.zip -O /tmp/gradle.zip
+          unzip -q /tmp/gradle.zip -d /tmp
+          ln -sf /tmp/gradle-8.5/bin/gradle /usr/local/bin/gradle
+
       - name: Build Debug APK
-        run: ./gradlew assembleDebug --no-daemon --stacktrace
+        run: ./gradlew assembleDebug --no-daemon --stacktrace --warning-mode all
 
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
