@@ -3,12 +3,12 @@ name: Build Debug APK
 on:
   push:
     branches: [ main, master ]
-  workflow_dispatch:  # 支持手动触发
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -21,18 +21,12 @@ jobs:
 
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v3
-      with:
-        gradle-version: '8.5'
 
-    - name: Generate Gradle Wrapper (if missing)
-      run: |
-        if [ ! -f gradlew ]; then
-          gradle wrapper --gradle-version 8.5
-          chmod +x gradlew
-        fi
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
 
-    - name: Build debug APK with Gradle
-      run: ./gradlew :app:assembleDebug --no-daemon
+    - name: Build Debug APK
+      run: ./gradlew assembleDebug --no-daemon --stacktrace
 
     - name: Upload debug APK
       uses: actions/upload-artifact@v4

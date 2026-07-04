@@ -1,19 +1,6 @@
 // 项目级 build.gradle
 // 功能：配置 Gradle 插件版本
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
+plugins {
+    id 'com.android.application' version '8.2.0' apply false
 }

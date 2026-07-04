@@ -4,9 +4,8 @@
 *.dex
 *.class
 *.log
-*.jar
-*.pyc
-*.pyo
+.pyc
+.pyo
 .DS_Store
 *.iml
 .gradle/
